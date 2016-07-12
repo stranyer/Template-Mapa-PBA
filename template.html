@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Template Mapa</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+        <!--[if lte IE 8]>
+          <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
+        <![endif]-->
+        <link rel="shortcut icon" href="http://www.gba.gob.ar/sites/default/files/favicon_5.ico" type="image/vnd.microsoft.icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/jquery.multilevelpushmenu.css">
+        <link rel="stylesheet" href="css/basichtml.css">
+        <script type="text/javascript" src="http://oss.maxcdn.com/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+        <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            background: black;
+        }
+
+        
+        </style>
+        <script>
+        var layer;
+
+
+        function init() {
+            var url = 'https://tomicrom.cartodb.com/api/v2/viz/a2d4f986-3f9a-11e6-bd20-0e787de82d45/viz.json';
+            var visualizacion = cartodb.createVis("map", url)
+                .done(function(vis, layers) {
+                    layer = layers[1];
+                });
+        }
+
+        function showLayer(layerToShow) {
+
+            //turn off all layers
+            layer.getSubLayers().forEach(function(i) {
+                i.hide()
+            });
+
+            switch (layerToShow.id) {
+                case "barrios":
+                    layer.getSubLayer(0).show();
+                    break;
+                case "hospitales":
+                    layer.getSubLayer(1).show();
+                    break;
+                case "cerrajerias":
+                    layer.getSubLayer(2).setSQL("SELECT * FROM cerrajerias").show();
+                    break;
+                case "cerrajeriaspalermo":
+                    layer.getSubLayer(2).setSQL("SELECT * FROM cerrajerias WHERE barrio = 'PALERMO'").show();
+                    break;
+                case "todo":
+                    layer.getSubLayer(0).show();
+                    layer.getSubLayer(1).show();
+                    layer.getSubLayer(2).show();
+                    break;   
+                
+            }
+
+            return true;
+
+
+        }
+        </script>
+    </head>
+    <body  onload="init()">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<!-- Mapa -->
+          
+        <div class="pushobj" id='map'>
+      
+        </div>
+       
+
+<!-- MENU -->
+        <div id="menu">
+            <nav>
+                <h2><i class="fa fa-reorder"></i>All Categories</h2>
+                <ul>
+
+                        <li><a href="#barrios" id="barrios" class="button barrios" onclick="showLayer(this);">barrios</a></li>
+                        <li><a href="#hospitales" id="hospitales" class="button hospitales" onclick="showLayer(this)">hospitales</a></li>
+                        <li><a href="#todo" id="todo" class="button todo" onclick="showLayer(this)">todo</a></li>
+
+
+                        
+                        <li>
+                          <a href="#cerrajerias" id="cerrajerias" class="button cerrajerias" onclick="showLayer(this);"><i class="fa fa-location-arrow"></i>Cerrajerias </a>
+                          <h2><i class="fa fa-location-arrow"></i>Cerrajerias</h2>
+                          <ul>
+                              <li>
+                                  <a href="#cerrajeriaspalermo" id="cerrajeriaspalermo" class="button cerrajeriaspalermo" onclick="showLayer(this);"><i class="fa fa-map-marker"></i>Palermo</a>
+
+                              </li>
+                              <li>
+                                  <a href="#cerrajerias" id="cerrajerias" class="button cerrajerias" onclick="showLayer(this);"><i class="fa fa-map-marker"></i>todas</a>
+
+                              </li>
+                          </ul>
+                      </li>
+                    
+                </ul>
+            </nav>
+        </div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/jquery.multilevelpushmenu.min.js"></script>
+        <script type="text/javascript" src="js/basichtml.js"></script>
+    </body>
+</html>
