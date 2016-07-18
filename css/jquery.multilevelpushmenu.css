@@ -14,7 +14,7 @@
 	background: #f5f5f5; /*COLOR DEL FONDO DEL SIDEBAR */
 	width: auto;
 	min-height: 100%;
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: 'din', sans-serif;
 	font-size: 1em;
 	zoom: 1;
 	background-image: url(http://www.gba.gob.ar/sites/all/themes/bootstrap-business/logo_gba.svg);
@@ -77,7 +77,7 @@
 	display: block;
 	outline: none;
 	overflow: hidden;
-	font-size: 1.5em;
+	font-size: 1em;
 	line-height: 1em;
 	padding: .2em .2em;
 	text-decoration: none;
